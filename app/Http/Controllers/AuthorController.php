@@ -12,7 +12,8 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        //
+        $authors = Author::all();
+        return view('backend.author.list',compact('authors'));
     }
 
     /**
@@ -20,7 +21,7 @@ class AuthorController extends Controller
      */
     public function create()
     {
-        //
+       return view('backend.author.create');
     }
 
     /**
@@ -28,7 +29,25 @@ class AuthorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       //return 'store';
+        // var_dump($request->all());
+        // die();
+        $request->validate([
+            'authorName' => 'min:3|required',
+        ]);
+
+
+        $authorName = $request->authorName;
+
+        Author::create([
+            'name' => $authorName,
+        ]);
+
+        //return $authorName;
+       
+        return redirect()->route('authors.index');
+
+
     }
 
     /**
@@ -36,7 +55,8 @@ class AuthorController extends Controller
      */
     public function show(Author $author)
     {
-        //
+       
+        return view('backend.author.detail',compact('id'));
     }
 
     /**
@@ -44,7 +64,9 @@ class AuthorController extends Controller
      */
     public function edit(Author $author)
     {
-        //
+        
+      // $author = Author::find($id);
+       return view('backend.author.edit',compact('author'));  
     }
 
     /**
@@ -52,7 +74,22 @@ class AuthorController extends Controller
      */
     public function update(Request $request, Author $author)
     {
-        //
+        // var_dump($request->all());
+        // die();
+        $request->validate([
+            'authorName' => 'required|min:3',
+        ]);
+
+        $authorName = $request->authorName;
+
+        // update into database table
+       // $author = Author::find($id);
+        $author->name = $authorName;
+        $author->save();
+
+        // redirect to list page
+        return redirect()->route('authors.index');
+
     }
 
     /**
@@ -60,6 +97,8 @@ class AuthorController extends Controller
      */
     public function destroy(Author $author)
     {
-        //
+       // $author = Author::find($id);
+        $author->delete();
+        return redirect()->route('authors.index');
     }
 }

@@ -12,7 +12,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::all();
+        return view('backend.category.list', compact('categories'));
     }
 
     /**
@@ -20,7 +21,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.category.create');
     }
 
     /**
@@ -28,7 +29,19 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'categoryName' => 'required|string|max:100|min:3',
+        ]);
+
+        // Category::create([
+        //     'name' => $request->categoryName
+        // ]);
+
+        $category = new Category();
+        $category->name = $request->categoryName;
+        $category->save();
+
+        return redirect()->route('categories.index')->with('success', 'Category created successfully');
     }
 
     /**
@@ -36,7 +49,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+         return view('backend.category.detail',compact('id'));
     }
 
     /**
@@ -44,7 +57,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('backend.category.edit',compact('category'));  
     }
 
     /**
@@ -52,7 +65,19 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+       $request->validate([
+            'categoryName' => 'required|min:3',
+        ]);
+
+        $categoryName = $request->categoryName;
+
+        // update into database table
+       // $author = Author::find($id);
+        $category->name = $categoryName;
+        $category->save();
+
+        // redirect to list page
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -60,6 +85,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+      $category->delete();
+        return redirect()->route('categories.index');
     }
 }
