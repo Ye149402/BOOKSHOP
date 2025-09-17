@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
   $('.addToCart').click(function(){
       // alert("OK");
       let id = $(this).data('id');
@@ -125,7 +126,7 @@ $(document).ready(function(){
 
   $('tbody').on('click','.min',function(){
       let key = $(this).data('key');
-      // alert("sksdjkjdf");
+       //alert("sksdjkjdf");
       let itemstring = localStorage.getItem('shops');
       if(itemstring){
           let itemArray = JSON.parse(itemstring);
@@ -151,7 +152,7 @@ $(document).ready(function(){
 
   $('tbody').on('click','.max',function(){
       let key = $(this).data('key');
-      alert("sksdjkjdf");
+      //alert("sksdjkjdf");
       let itemstring = localStorage.getItem('shops');
       if(itemstring){
           let itemArray = JSON.parse(itemstring);

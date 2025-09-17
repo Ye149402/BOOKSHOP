@@ -27,5 +27,6 @@
         <script src="{{ asset('frontend_assets/js/scripts.js') }}"></script>
         <!-- Cart Custom JS-->
         <script src="{{ asset('frontend_assets/js/carts.js') }}"></script>
+        @yield('script')
     </body>
 </html>

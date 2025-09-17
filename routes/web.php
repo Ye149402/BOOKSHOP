@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+ //Route::get('/', function () {
+    // return view('welcome');
+ // });
 
 Route::get('/', [App\Http\Controllers\FrontendController::class, 'index'])->name('homepage');
 Route::get('/detail/{id}', [App\Http\Controllers\FrontendController::class, 'detail'])->name('detailpage');
@@ -29,3 +29,4 @@ Route::group(['middleware' => ['auth', 'role:owner']], function () { // 'role:ow
     Route::resource('authors', App\Http\Controllers\AuthorController::class);
     Route::resource('books', App\Http\Controllers\BookController::class);
 });
+ Route::resource('orders', App\Http\Controllers\OrderController::class)->middleware('auth');
